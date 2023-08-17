@@ -1,0 +1,55 @@
+<task numberOfSnaps="15" stepsPerSnap="1">
+    
+    <system>
+        <contactThreshold measure="abs" value="0.0023" />
+		<meshMovement type="none" />
+    </system>
+
+    <bodies>
+        <body id="platform">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/CirclePlatform.geo" tetrSize="0.0035" />
+            <material id="ice" />
+        </body>
+
+        <body id="ice_disc">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/Disc.geo" tetrSize="0.0035" />
+            <material id="ice" />
+            <transform type="translate" moveX="0" moveY="0" moveZ="0.032" />
+        </body>
+
+        <body id="ball">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/Ball.geo" tetrSize="0.0035" />
+            <material id="ice" />
+            <transform type="translate" moveX="0" moveY="0" moveZ="0.132" />
+        </body>
+    </bodies>
+
+    <materials>
+        <material name="ice" rheology="isotropic">
+            <la>396e7</la>
+            <mu>187e7</mu>
+            <rho>910</rho>
+        </material>
+
+        <material name="alloySteel" rheology="isotropic">
+            <la>122e9</la>
+            <mu>81e9</mu>
+            <rho>7812</rho>
+        </material>
+
+        <material name="carbonSteel" rheology="isotropic">
+            <la>173e9</la>
+            <mu>74e9</mu>
+            <rho>7850</rho>
+        </material>
+    </materials>
+
+    <initialState>
+        <area type="box" minX="-0.038" minY="-0.038" minZ="0.094" maxX="0.038" maxY="0.038" maxZ="0.172" />
+
+        <values vz="2.5" />
+    </initialState>
+</task>
