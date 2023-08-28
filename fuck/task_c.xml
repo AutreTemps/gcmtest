@@ -1,15 +1,17 @@
-<task numberOfSnaps="15" stepsPerSnap="1">
+<task numberOfSnaps="500" stepsPerSnap="1" xmlns:ndi="gcm3d.plugins.ndi">
     
     <system>
         <contactThreshold measure="abs" value="0.0023" />
 		<meshMovement type="none" />
+        <defaultFailureModel type="TsaiWuFailureModel" />
+        <loadPlugin name="ndi" />
     </system>
 
     <bodies>
         <body id="platform">
             <rheology type="elastic" />
             <mesh id="1" type="geo2" file="fuck/models/CirclePlatform.geo" tetrSize="0.0035" />
-            <material id="ice" />
+            <material id="carbonSteel" />
         </body>
 
         <body id="ice_disc">
@@ -22,7 +24,7 @@
         <body id="ball">
             <rheology type="elastic" />
             <mesh id="1" type="geo2" file="fuck/models/Ball.geo" tetrSize="0.0035" />
-            <material id="ice" />
+            <material id="alloySteel" />
             <transform type="translate" moveX="0" moveY="0" moveZ="0.132" />
         </body>
     </bodies>
@@ -32,6 +34,16 @@
             <la>396e7</la>
             <mu>187e7</mu>
             <rho>910</rho>
+
+            <failure type="hashin">
+				<dir>3</dir>
+				<Xc>1200000</Xc>
+				<Xt>1200000</Xt>
+				<Yc>1200000</Yc>
+				<Yt>1200000</Yt>
+				<St>500000</St>
+				<S>500000</S>
+			</failure>
         </material>
 
         <material name="alloySteel" rheology="isotropic">
@@ -48,8 +60,20 @@
     </materials>
 
     <initialState>
-        <area type="box" minX="-0.038" minY="-0.038" minZ="0.094" maxX="0.038" maxY="0.038" maxZ="0.172" />
+        <area type="box" minX="-0.038" minY="-0.038" minZ="0.094" maxX="0.038" maxY="0.038" maxZ="0.500" />
 
-        <values vz="2.5" />
+        <values vz="-2.5" />
     </initialState>
+
+    <ndi:sensor name="ndi_collision_line">
+        <area type="box" minX="-0.005" maxX="0.005" minY="-0.005" maxY="0.005" minZ="0.0319" maxZ="0.0321" />
+    </ndi:sensor>
+
+    <ndi:sensor name="ndi_hit_area">
+        <area type="box" minX="-0.005" maxX="0.005" minY="-0.035" maxY="-0.025" minZ="0.0919" maxZ="0.0921" />
+    </ndi:sensor>
+
+<!--    <ndi:sensor name="ndi_side_surface">
+        <area type="box" minX="-0.005" maxX="0.005" minY="0.1435" maxY="0.1425" minZ="0.0615" maxZ="0.0625" />
+    </ndi:sensor>-->
 </task>

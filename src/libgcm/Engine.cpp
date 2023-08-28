@@ -27,6 +27,8 @@
 #include <gsl/gsl_errno.h>
 #include <dlfcn.h>
 
+#include <unistd.h>
+
 using namespace gcm;
 using std::string;
 using std::vector;
@@ -889,7 +891,15 @@ bool Engine::hasOption(string option) const
 void Engine::loadPlugin(std::string name) {
 #if CONFIG_ENABLE_PLUGINS
     LOG_INFO("Loading plugin: " << name);
-    void* handle = dlopen(("libgcm_" + name + ".so").c_str(), RTLD_LAZY);
+
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("Current working dir: %s\n", cwd);
+    } else {
+        LOG_INFO("FUCK");
+    }
+
+    void* handle = dlopen(("./build/libgcm_" + name + ".so").c_str(), RTLD_LAZY);
     if (!handle)
         THROW_INVALID_ARG("Plugin not found: " + string(dlerror()));
 
