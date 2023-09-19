@@ -1,0 +1,95 @@
+<task numberOfSnaps="500" stepsPerSnap="1" xmlns:ndi="gcm3d.plugins.ndi">
+    
+    <system>
+        <contactThreshold measure="abs" value="0.0023" />
+		<meshMovement type="none" />
+        <defaultFailureModel type="TsaiWuFailureModel" />
+        <loadPlugin name="ndi" />
+    </system>
+
+    <bodies>
+        <body id="platform">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/CirclePlatform.geo" tetrSize="0.0035" />
+            <material id="carbonSteel" />
+        </body>
+
+        <body id="ice_disc">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/Disc.geo" tetrSize="0.0035" />
+            <material id="ice" />
+            <transform type="translate" moveX="0" moveY="0" moveZ="0.032" />
+        </body>
+
+        <body id="ball">
+            <rheology type="elastic" />
+            <mesh id="1" type="geo2" file="fuck/models/Ball.geo" tetrSize="0.0035" />
+            <material id="alloySteel" />
+            <transform type="translate" moveX="0" moveY="0" moveZ="0.132" />
+        </body>
+<!--
+        <body id="fuck1">
+            <material id="ice">
+                <area type="box" minX="-0.005" maxX="0.005" minY="-0.005" maxY="0.005" minZ="0.187" maxZ="0.189" />                
+            </material>
+        </body>
+
+        <body id="fuck2">
+            <material id="ice">
+                <area type="box" minX="-0.005" maxX="0.005" minY="0.1435" maxY="0.1425" minZ="0.0615" maxZ="0.0625" />                
+            </material>
+        </body>-->
+    </bodies>
+
+    <materials>
+        <material name="ice" rheology="isotropic">
+            <la>396e7</la>
+            <mu>187e7</mu>
+            <rho>910</rho>
+
+            <failure type="hashin">
+				<dir>3</dir>
+				<Xc>540000</Xc>
+				<Xt>540000</Xt>
+				<Yc>540000</Yc>
+				<Yt>540000</Yt>
+				<St>210000</St>
+				<S>210000</S>
+			</failure>
+        </material>
+
+        <material name="alloySteel" rheology="isotropic">
+            <la>122e9</la>
+            <mu>81e9</mu>
+            <rho>7812</rho>
+        </material>
+
+        <material name="carbonSteel" rheology="isotropic">
+            <la>173e9</la>
+            <mu>74e9</mu>
+            <rho>7850</rho>
+        </material>
+    </materials>
+
+    <initialState>
+        <area type="box" minX="-0.038" minY="-0.038" minZ="0.094" maxX="0.038" maxY="0.038" maxZ="0.500" />
+
+        <values vz="-2.5" />
+    </initialState>
+
+    <ndi:sensor name="ndi_collision_line">
+        <area type="box" minX="-0.005" maxX="0.005" minY="-0.005" maxY="0.005" minZ="0.0319" maxZ="0.0321" />
+    </ndi:sensor>
+
+    <ndi:sensor name="ndi_hit_area">
+        <area type="box" minX="-0.005" maxX="0.005" minY="-0.035" maxY="-0.025" minZ="0.0919" maxZ="0.0921" />
+    </ndi:sensor>
+
+    <ndi:sensor name="ndi_ball_sensor">
+        <area type="box" minX="-0.005" maxX="0.005" minY="-0.005" maxY="0.005" minZ="0.187" maxZ="0.189" />
+    </ndi:sensor>
+
+    <ndi:sensor name="ndi_side_surface">
+        <area type="box" minX="-0.005" maxX="0.005" minY="0.1435" maxY="0.1425" minZ="0.0615" maxZ="0.0625" />
+    </ndi:sensor>
+</task>
